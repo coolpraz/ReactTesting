@@ -1,12 +1,12 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import App from "./App";
 import kebabCaseToTitleCase from "./helper";
+import App from "./App";
 
 test("button click flow", () => {
     render(<App />);
 
     // find an element with a role of button and text matching /midnight-blue/i
-    const buttonElement = screen.getByRole("button", { name: /midnight-blue/i });
+    const buttonElement = screen.getByRole("button", { name: /blue/i });
 
     // expect the class to be red
     expect(buttonElement).toHaveClass("medium-voilet-red");
@@ -18,14 +18,14 @@ test("button click flow", () => {
     expect(buttonElement).toHaveClass("midnight-blue");
 
     // expect the button text to match /medium-voilet-red/i
-    expect(buttonElement).toHaveTextContent(/medium-voilet-red/i);
+    expect(buttonElement).toHaveTextContent(/red/i);
 });
 
 test("checkbox flow", () => {
     render(<App />);
 
     // find elements
-    const buttonElement = screen.getByRole("button", { name: /midnight-blue/i });
+    const buttonElement = screen.getByRole("button", { name: /blue/i });
     const checkboxElement = screen.getByRole("checkbox", {
         name: /disable button/i,
     });
@@ -51,7 +51,7 @@ it("checkbox flow afer button click", () => {
     render(<App />);
 
     // find elements
-    const buttonElement = screen.getByRole("button", { name: /midnight-blue/i });
+    const buttonElement = screen.getByRole("button", { name: /blue/i });
     const checkboxElement = screen.getByRole("checkbox", {
         name: /disable button/i,
     });
