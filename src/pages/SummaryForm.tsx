@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
 import { Button } from "@/components/ui/button";
 import {
     Form,
@@ -13,14 +12,22 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
 import { toast } from "sonner";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useState } from "react";
 
 const FormSchema = z.object({
     terms: z.boolean().default(false).optional(),
 });
 
 const SummaryForm = () => {
+    const [open, setOpen] = useState(false);
+
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -62,17 +69,35 @@ const SummaryForm = () => {
                             <div className="space-y-1 leading-none">
                                 <FormLabel>
                                     I agree to{" "}
-                                    <span style={{ color: "blue" }}>
-                                        {" "}
-                                        Terms and Conditions
-                                    </span>
+                                    <Popover open={open} onOpenChange={setOpen}>
+                                        <PopoverTrigger asChild>
+                                            <span
+                                                style={{ color: "blue" }}
+                                                onMouseEnter={() =>
+                                                    setOpen(true)
+                                                }
+                                                onMouseLeave={() =>
+                                                    setOpen(false)
+                                                }
+                                            >
+                                                {" "}
+                                                Terms and Conditions
+                                            </span>
+                                        </PopoverTrigger>
+                                        <PopoverContent>
+                                            No ice cream will actually be
+                                            delivered
+                                        </PopoverContent>
+                                    </Popover>
                                 </FormLabel>
                             </div>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
-                <Button type="submit" disabled={!termsAccepted}>Confirm Order</Button>
+                <Button type="submit" disabled={!termsAccepted}>
+                    Confirm Order
+                </Button>
             </form>
         </Form>
     );
