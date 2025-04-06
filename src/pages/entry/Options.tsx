@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import ScoopOption from "./ScoopOption";
 import ToppingOption from "./ToppingOption";
+import AlertBanner from "@/components/AlertBanner";
 
 type OptionProps = {
     name: string;
@@ -10,6 +11,7 @@ type OptionProps = {
 
 const Options = ({ optionType }: { optionType: string }) => {
     const [items, setItems] = useState([]);
+    const [error, seterror] = useState(false);
 
     // optionType is either "scoops" or "toppings"
     useEffect(() => {
@@ -18,10 +20,16 @@ const Options = ({ optionType }: { optionType: string }) => {
             .then((response) => {
                 setItems(response.data);
             })
-            .catch((error) => {
-                console.error("Error fetching data:", error);
-            });
+            .catch((error) => seterror(true));
     }, [optionType]);
+
+    if (error) {
+        return <AlertBanner
+            variant="destructive"
+            title="Error"
+            message="An unexpected error occurred. Please try again later."
+        />
+    }
 
     const ItemComponent = optionType === "scoops" ? ScoopOption : ToppingOption;
 
