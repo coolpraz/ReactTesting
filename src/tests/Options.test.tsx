@@ -1,5 +1,5 @@
 import Options from "@/pages/entry/Options";
-import { render, screen } from "@testing-library/react";
+import { render, screen } from "@/lib/testing-library-utils";
 
 test("displays image for each scoop option from server", async () => {
     render(<Options optionType="scoops" />);

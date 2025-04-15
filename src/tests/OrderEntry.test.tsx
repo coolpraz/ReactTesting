@@ -1,6 +1,6 @@
 import { http, HttpResponse } from "msw";
 import { server } from "@/mocks/server";
-import { render, screen } from "@testing-library/react";
+import { render, screen } from "@/lib/testing-library-utils";
 import OrderEntry from "@/pages/entry/OrderEntry";
 
 test("handels error for scoops and toppings route", async () => {
