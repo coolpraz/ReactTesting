@@ -2,8 +2,13 @@ import { Button } from "@/components/ui/button";
 import Options from "./Options";
 import { useOrderDetails } from "@/contexts/OrderDetails";
 import { formatCurrency } from "@/lib/utils";
+import { OrderPhase } from "@/App";
 
-const OrderEntry = () => {
+interface OrderEntryProps {
+    setOrderPhase: (phase: OrderPhase) => void;
+}
+
+const OrderEntry = ({ setOrderPhase }: OrderEntryProps) => {
     const { totals } = useOrderDetails();
 
     return (
@@ -14,7 +19,9 @@ const OrderEntry = () => {
             <h2>
                 Grand total: {formatCurrency(totals.scoops + totals.toppings)}
             </h2>
-            {/* <Button onClick={() => setOrderPhase("review")}>Order Sundae!</Button> */}
+            <Button onClick={() => setOrderPhase("review")}>
+                Order Sundae!
+            </Button>
         </div>
     );
 };

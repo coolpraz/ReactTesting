@@ -17,15 +17,19 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
-import { toast } from "sonner";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
+import { OrderPhase } from "@/App";
+
+interface SummaryFormProps {
+    setOrderPhase: (phase: OrderPhase) => void;
+}
 
 const FormSchema = z.object({
     terms: z.boolean().default(false).optional(),
 });
 
-const SummaryForm = () => {
+const SummaryForm = ({ setOrderPhase }: SummaryFormProps) => {
     const [open, setOpen] = useState(false);
 
     const form = useForm<z.infer<typeof FormSchema>>({
@@ -38,15 +42,9 @@ const SummaryForm = () => {
     const termsAccepted = form.watch("terms");
 
     function onSubmit(data: z.infer<typeof FormSchema>) {
-        toast("You submitted the following values:", {
-            description: (
-                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                    <code className="text-white">
-                        {JSON.stringify(data, null, 2)}
-                    </code>
-                </pre>
-            ),
-        });
+        if (data.terms) {
+            setOrderPhase("completed");
+        }
     }
 
     return (

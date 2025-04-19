@@ -1,4 +1,4 @@
-import { http, HttpResponse } from "msw";
+import { delay, http, HttpResponse } from "msw";
 
 export const handlers = [
     // Intercept "GET https://example.com/user" requests...
@@ -16,5 +16,11 @@ export const handlers = [
             { name: "M&Ms", imagePath: "/images/m-and-ms.png" },
             { name: "Hot Fudge", imagePath: "/images/hot-fudge.png" },
         ]);
+    }),
+
+    http.post("http://localhost:3030/order", async () => {
+        // add a 100ms pause here to give the tests a chance to see the "loading" state
+        await delay(400);
+        return HttpResponse.json({ orderNumber: 123455676 }, { status: 201});
     }),
 ];
