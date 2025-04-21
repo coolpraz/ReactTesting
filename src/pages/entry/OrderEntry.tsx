@@ -11,6 +11,9 @@ interface OrderEntryProps {
 const OrderEntry = ({ setOrderPhase }: OrderEntryProps) => {
     const { totals } = useOrderDetails();
 
+    // disable order button if there aren't any scoops in the order
+    const orderDisabled = totals.scoops === 0;
+
     return (
         <div>
             <h1>Design Your Sundae!</h1>
@@ -19,7 +22,7 @@ const OrderEntry = ({ setOrderPhase }: OrderEntryProps) => {
             <h2>
                 Grand total: {formatCurrency(totals.scoops + totals.toppings)}
             </h2>
-            <Button onClick={() => setOrderPhase("review")}>
+            <Button disabled={orderDisabled} onClick={() => setOrderPhase("review")}>
                 Order Sundae!
             </Button>
         </div>
